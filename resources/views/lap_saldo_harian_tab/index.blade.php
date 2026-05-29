@@ -1,0 +1,82 @@
+
+<div class="card border-top border-0 border-4 border-success" id="headerJB">
+    <div class="card-body" >                
+        <div class="row">
+            <div class="d-flex align-items-center">  
+				<div class="col-sm-1" align="center">                                    
+					<img src="{{ URL::asset(session("logoHeaderTransaksi")) }}" alt="" />                
+				</div>
+				<div class="col-sm-11" style="margin-left:30px">
+					<h4 class="name"><a href="javascript:;"><strong>{{$data['title']}}</strong></a></h4>
+					<h6 class="name font-16"><a href="javascript:;">{{$data['subtitle']}}</a></h6>
+				</div>                                                                           
+			</div>                             
+        </div>
+        <hr/>            
+        <form class="form-horizontal form-label-left" id="formEntry" method="post">    
+            @csrf         
+            <div class="mb-3">
+                <label class="form-label"><b>Tanggal Mutasi Nasabah : </b></label>
+                <input type="text" class="{{$data['classFormControl']}} datepicker" id="tgl_cari" value="" name="tgl_cari">            
+            </div>   
+            <div class="mb-3">
+                <label class="form-label"><b>No. Rekening : </b></label>
+                @if (($LNasabahIndividu)->isEmpty())
+                <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
+                    <div class="text-white">Data Rekening Tidak Ada</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @else
+                    <select class="{{$data['classFormSelect2']}} clear" name="id_rekening" id="id_rekening" >
+                        <option value=""></option>
+                        @foreach($LNasabahIndividu as $nasabahIndividu)
+                        <option value="{{ $nasabahIndividu->tab_id }}" >{{ $nasabahIndividu->nomor_rekening.' - '.ucfirst(trans($nasabahIndividu->nama)) }}</option>
+                        @endforeach                                                                                                    
+                    </select>                
+                @endif
+                <label for="id_rekening" generated="true" class="error"></label>
+                <label id="validationError"></label>
+            </div>          
+            <div class="toolbar hidden-print">
+                <div class="text-start">
+                    <button type="button" id="btn_search" class="btn btn-primary btn-sm"><i class="bx bxs-search"></i> Cari Data</button>                
+                </div>                
+            </div>
+        </form>
+        <!--<div class="form_custom1" id="show_table"></div>-->       
+    </div>
+</div>
+
+<div class="card border-top border-0 border-4 border-success" id="contentJB">
+    <div class="card-body" >
+        <div class="toolbar hidden-print">
+            <div class="text-end">
+                <button type="button" id="btn_back" class="btn btn-primary btn-sm"><i class="bx bxs-arrow-from-right"></i> Kembali</button>
+                <button type="button" id="btn_print" class="btn btn-dark btn-sm"><i class="bx bxs-printer"></i> Print</button>                
+            </div>
+            <hr/>
+        </div>
+        
+        <div id="myModalHorizontalprint" style="margin:10px">
+            <div class="row">
+                <div class="d-flex align-items-center">  
+                    <div class="col-sm-1">                                    
+                        <img src="{{ URL::asset(session("logoUHW")) }}" alt="" />                
+                    </div>                    
+                    <div class="col-sm-11" style="margin-left:20px">
+                        <h4 class="name"><a href="javascript:;"><strong>{{$data['title']}}</strong></a></h4>
+                        <h6 class="name font-16"><a href="javascript:;">{{$data['subtitle']}}</a></h6>
+                        <h6 class="name font-14"><span id="nama"></span></h6><br>
+                        <h6 class="name font-14"><span id="no_rek"></span></h6><br>
+                        <h6 class="name font-14"><span id="per_tanggal"></span></h6>
+                    </div>                                                                            
+                </div>                
+            </div>
+            <hr/>
+            <center><div id="loading"><img src="{{asset('bank_stiep/images/load.gif')}}" height='100'></div></center><br>            
+            <div class="form_custom1" id="show_table"></div>
+       </div>
+    </div>
+</div>
+
+<script src="{{ asset('additional/js/lap_saldo_harian_tab.js') }}"></script>

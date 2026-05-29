@@ -1,0 +1,49 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+ # Blokir bot berdasarkan User-Agent
+    RewriteCond %{HTTP_USER_AGENT} amazonbot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} bingbot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} claudebot [NC]
+    RewriteRule ^.* - [F,L]
+
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<FilesMatch "^(\.env|\.git|composer\.json|composer\.lock|package\.json|webpack\.mix\.js|artisan|server\.php)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(php|php3|php4|php5|phtml)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+<Files index.php>
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<FilesMatch "\.(bak|sql|sh|bat|exe|cmd|dll|bin)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
