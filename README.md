@@ -1,4 +1,4 @@
-# Bank Syariah Management System
+# Bank Syariah Management System (SHOWCASE)
 ![Laravel](https://img.shields.io/badge/Laravel-6.20-red) ![PHP](https://img.shields.io/badge/PHP-7-blue) ![MySQL](https://img.shields.io/badge/MySQL-Database-orange) ![Ubuntu](https://img.shields.io/badge/Ubuntu-20.04-E95420)
 
 <p align="center">
